@@ -1,0 +1,19 @@
+<div class="profile-container">
+  <h1>Profile</h1>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-card *ngIf="!loading && username" class="profile-card">
+    <mat-card-header>
+      <mat-card-title>User Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="profile-info">
+        <p><strong>Username:</strong> {{ username }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

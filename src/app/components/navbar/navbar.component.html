@@ -1,0 +1,24 @@
+<mat-toolbar color="primary">
+  <span>Gym Management System</span>
+  <span class="spacer"></span>
+  <nav class="nav-links">
+    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+    <a mat-button routerLink="/members" routerLinkActive="active">Members</a>
+    <a mat-button routerLink="/payments" routerLinkActive="active">Payments</a>
+    <a mat-button routerLink="/payment-plans" routerLinkActive="active">Payment Plans</a>
+    <a mat-button routerLink="/attendance" routerLinkActive="active">Attendance</a>
+    <a mat-button routerLink="/meal-plans" routerLinkActive="active">Meal Plans</a>
+    <a mat-button routerLink="/reports" routerLinkActive="active">Reports</a>
+    <a mat-button routerLink="/profile" routerLinkActive="active">Profile</a>
+  </nav>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+

@@ -1,0 +1,37 @@
+.payments-container {
+  padding: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.payments-table {
+  width: 100%;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.paid {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-badge.pending {
+  background-color: #ff9800;
+  color: white;
+}
+
+.status-badge.expired {
+  background-color: #f44336;
+  color: white;
+}
+

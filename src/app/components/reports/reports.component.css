@@ -1,0 +1,44 @@
+.reports-container {
+  padding: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.stats-summary {
+  margin-bottom: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-item h3 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.stat-item p {
+  margin: 4px 0 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.reports-table {
+  width: 100%;
+  margin-top: 16px;
+}
+

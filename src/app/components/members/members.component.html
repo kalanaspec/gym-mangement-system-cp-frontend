@@ -1,0 +1,63 @@
+<div class="members-container">
+  <div class="header">
+    <h1>Members Management</h1>
+    <button mat-raised-button color="primary" (click)="openAddMemberDialog()">
+      <mat-icon>add</mat-icon>
+      Add Member
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="members" class="members-table" *ngIf="!loading">
+    <ng-container matColumnDef="memberId">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let member">{{ member.memberId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let member">{{ member.user?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email</th>
+      <td mat-cell *matCellDef="let member">{{ member.user?.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let member">
+        <span [class]="'status-badge ' + member.status">{{ member.status }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="paymentStatus">
+      <th mat-header-cell *matHeaderCellDef>Payment Status</th>
+      <td mat-cell *matCellDef="let member">
+        <span [class]="'payment-badge ' + member.paymentStatus">{{ member.paymentStatus }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let member">
+        <button mat-icon-button *ngIf="member.status === 'pending'" (click)="approveMember(member.memberId)" matTooltip="Approve">
+          <mat-icon>check_circle</mat-icon>
+        </button>
+        <button mat-icon-button (click)="updateStatus(member.memberId, 'active')" *ngIf="member.status !== 'active'" matTooltip="Activate">
+          <mat-icon>play_circle</mat-icon>
+        </button>
+        <button mat-icon-button (click)="updateStatus(member.memberId, 'inactive')" *ngIf="member.status !== 'inactive'" matTooltip="Deactivate">
+          <mat-icon>pause_circle</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+

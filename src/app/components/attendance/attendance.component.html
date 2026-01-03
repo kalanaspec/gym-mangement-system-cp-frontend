@@ -1,0 +1,32 @@
+<div class="attendance-container">
+  <h1>Log Attendance</h1>
+
+  <mat-card class="attendance-card">
+    <mat-card-content>
+      <form [formGroup]="attendanceForm" (ngSubmit)="logAttendance()">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Member</mat-label>
+          <mat-select formControlName="memberId" required>
+            <mat-option *ngFor="let member of members" [value]="member.memberId">
+              {{ member.user?.name }} ({{ member.user?.email }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Source</mat-label>
+          <mat-select formControlName="source" required>
+            <mat-option value="Front Desk">Front Desk</mat-option>
+            <mat-option value="Mobile App">Mobile App</mat-option>
+            <mat-option value="RFID Scanner">RFID Scanner</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class="full-width" [disabled]="attendanceForm.invalid">
+          Log Attendance
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+

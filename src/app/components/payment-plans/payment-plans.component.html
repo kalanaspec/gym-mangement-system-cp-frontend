@@ -1,0 +1,58 @@
+<div class="payment-plans-container">
+  <div class="header">
+    <h1>Payment Plans</h1>
+    <button mat-raised-button color="primary" (click)="openAddPlanDialog()">
+      <mat-icon>add</mat-icon>
+      Add Plan
+    </button>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="paymentPlans" class="plans-table" *ngIf="!loading">
+    <ng-container matColumnDef="planId">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let plan">{{ plan.planId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let plan">{{ plan.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="planType">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let plan">{{ plan.planType }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="monthlyPrice">
+      <th mat-header-cell *matHeaderCellDef>Monthly Price</th>
+      <td mat-cell *matCellDef="let plan">${{ plan.monthlyPrice }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="yearlyPrice">
+      <th mat-header-cell *matHeaderCellDef>Yearly Price</th>
+      <td mat-cell *matCellDef="let plan">${{ plan.yearlyPrice }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="durationDays">
+      <th mat-header-cell *matHeaderCellDef>Duration (Days)</th>
+      <td mat-cell *matCellDef="let plan">{{ plan.durationDays }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let plan">
+        <button mat-icon-button (click)="deletePlan(plan.planId)" matTooltip="Delete">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+

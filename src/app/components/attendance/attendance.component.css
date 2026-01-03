@@ -1,0 +1,14 @@
+.attendance-container {
+  padding: 24px;
+}
+
+.attendance-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+

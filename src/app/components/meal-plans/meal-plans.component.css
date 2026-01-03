@@ -1,0 +1,28 @@
+.meal-plans-container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.meal-plans-table {
+  width: 100%;
+}
+
+.plan-text {
+  max-width: 500px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+

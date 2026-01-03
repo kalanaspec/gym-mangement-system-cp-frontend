@@ -1,0 +1,59 @@
+.members-container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.members-table {
+  width: 100%;
+}
+
+.status-badge, .payment-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.pending {
+  background-color: #ff9800;
+  color: white;
+}
+
+.status-badge.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-badge.inactive {
+  background-color: #f44336;
+  color: white;
+}
+
+.payment-badge.PAID {
+  background-color: #4caf50;
+  color: white;
+}
+
+.payment-badge.UNPAID {
+  background-color: #f44336;
+  color: white;
+}
+
+.payment-badge.PENDING {
+  background-color: #ff9800;
+  color: white;
+}
+

@@ -1,0 +1,50 @@
+<div class="payments-container">
+  <h1>Payments</h1>
+
+  <div *ngIf="loading" class="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <table mat-table [dataSource]="payments" class="payments-table" *ngIf="!loading">
+    <ng-container matColumnDef="paymentId">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let payment">{{ payment.paymentId }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="memberName">
+      <th mat-header-cell *matHeaderCellDef>Member</th>
+      <td mat-cell *matCellDef="let payment">{{ payment.member?.user?.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let payment">${{ payment.amount }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let payment">
+        <span [class]="'status-badge ' + payment.status">{{ payment.status }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef>Start Date</th>
+      <td mat-cell *matCellDef="let payment">{{ payment.startDate | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef>End Date</th>
+      <td mat-cell *matCellDef="let payment">{{ payment.endDate | date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="planName">
+      <th mat-header-cell *matHeaderCellDef>Plan</th>
+      <td mat-cell *matCellDef="let payment">{{ payment.plan?.name }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+

@@ -1,0 +1,25 @@
+.profile-container {
+  padding: 24px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.profile-card {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.profile-info {
+  padding: 16px 0;
+}
+
+.profile-info p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
