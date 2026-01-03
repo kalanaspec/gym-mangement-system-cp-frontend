@@ -181,8 +181,6 @@ export class AddMemberDialogComponent {
     this.memberForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
       address: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       height: [0, [Validators.required, Validators.min(0)]],
