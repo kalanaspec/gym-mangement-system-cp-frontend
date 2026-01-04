@@ -121,6 +121,21 @@ export class MembersComponent implements OnInit {
     });
   }
 
+  deleteMember(id: number): void {
+    if (confirm('Are you sure you want to delete this member? This action cannot be undone.')) {
+      this.memberService.deleteMember(id).subscribe({
+        next: () => {
+          this.snackBar.open('Member deleted successfully', 'Close', { duration: 3000 });
+          this.loadMembers();
+        },
+        error: (error) => {
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
+          console.error('Error:', error);
+        }
+      });
+    }
+  }
+
   openAddMemberDialog(): void {
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
       width: '500px'

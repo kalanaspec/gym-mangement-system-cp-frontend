@@ -84,6 +84,9 @@
         <button mat-icon-button (click)="setPaymentUnpaid(member.memberId)" *ngIf="member.paymentStatus === 'PAID'" matTooltip="Set Payment as Unpaid" color="warn">
           <mat-icon>money_off</mat-icon>
         </button>
+        <button mat-icon-button (click)="deleteMember(member.memberId)" matTooltip="Delete Member" color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
       </td>
     </ng-container>
 

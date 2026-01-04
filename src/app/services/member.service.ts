@@ -45,5 +45,9 @@ export class MemberService {
       paymentStatus: 'UNPAID'
     });
   }
+
+  deleteMember(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }
 
