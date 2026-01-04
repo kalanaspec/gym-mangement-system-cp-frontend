@@ -27,6 +27,31 @@
       <td mat-cell *matCellDef="let member">{{ member.user?.email }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef>Gender</th>
+      <td mat-cell *matCellDef="let member">{{ member.gender || '-' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell *matHeaderCellDef>Phone Number</th>
+      <td mat-cell *matCellDef="let member">{{ member.phoneNumber || '-' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="height">
+      <th mat-header-cell *matHeaderCellDef>Height (feet)</th>
+      <td mat-cell *matCellDef="let member">{{ member.height ? (member.height / 30.48).toFixed(2) + ' ft' : '-' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="weight">
+      <th mat-header-cell *matHeaderCellDef>Weight (kg)</th>
+      <td mat-cell *matCellDef="let member">{{ member.weight || '-' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <th mat-header-cell *matHeaderCellDef>Address</th>
+      <td mat-cell *matCellDef="let member">{{ member.address || '-' }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
       <td mat-cell *matCellDef="let member">
@@ -52,6 +77,12 @@
         </button>
         <button mat-icon-button (click)="updateStatus(member.memberId, 'inactive')" *ngIf="member.status !== 'inactive'" matTooltip="Deactivate">
           <mat-icon>pause_circle</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setPaymentPaid(member.memberId)" *ngIf="member.paymentStatus !== 'PAID'" matTooltip="Set Payment as Paid" color="primary">
+          <mat-icon>attach_money</mat-icon>
+        </button>
+        <button mat-icon-button (click)="setPaymentUnpaid(member.memberId)" *ngIf="member.paymentStatus === 'PAID'" matTooltip="Set Payment as Unpaid" color="warn">
+          <mat-icon>money_off</mat-icon>
         </button>
       </td>
     </ng-container>

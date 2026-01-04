@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
   selector: 'app-members',
@@ -40,7 +41,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   styleUrl: './members.component.css'
 })
 export class MembersComponent implements OnInit {
-  displayedColumns: string[] = ['memberId', 'name', 'email', 'status', 'paymentStatus', 'actions'];
+  displayedColumns: string[] = ['memberId', 'name', 'email', 'gender', 'phoneNumber', 'height', 'weight', 'address', 'status', 'paymentStatus', 'actions'];
   members: Member[] = [];
   loading = true;
 
@@ -63,7 +64,7 @@ export class MembersComponent implements OnInit {
       error: (error) => {
         console.error('Error loading members:', error);
         this.loading = false;
-        this.snackBar.open('Error loading members', 'Close', { duration: 3000 });
+        this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
       }
     });
   }
@@ -75,7 +76,7 @@ export class MembersComponent implements OnInit {
         this.loadMembers();
       },
       error: (error) => {
-        this.snackBar.open('Error approving member', 'Close', { duration: 3000 });
+        this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
         console.error('Error:', error);
       }
     });
@@ -88,7 +89,33 @@ export class MembersComponent implements OnInit {
         this.loadMembers();
       },
       error: (error) => {
-        this.snackBar.open('Error updating status', 'Close', { duration: 3000 });
+        this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  setPaymentPaid(id: number): void {
+    this.memberService.setPaymentPaid(id).subscribe({
+      next: () => {
+        this.snackBar.open('Payment status set to PAID (Monthly: 2500)', 'Close', { duration: 3000 });
+        this.loadMembers();
+      },
+      error: (error) => {
+        this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  setPaymentUnpaid(id: number): void {
+    this.memberService.setPaymentUnpaid(id).subscribe({
+      next: () => {
+        this.snackBar.open('Payment status set to UNPAID', 'Close', { duration: 3000 });
+        this.loadMembers();
+      },
+      error: (error) => {
+        this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
         console.error('Error:', error);
       }
     });
@@ -117,6 +144,14 @@ export class MembersComponent implements OnInit {
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" required>
         </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>UserName</mat-label>
+          <input matInput formControlName="username" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+        </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
@@ -136,13 +171,49 @@ export class MembersComponent implements OnInit {
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Height (cm)</mat-label>
-          <input matInput type="number" formControlName="height" required>
+          <mat-label>Height (feet)</mat-label>
+          <input matInput type="number" formControlName="height" step="0.01" required>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Weight (kg)</mat-label>
           <input matInput type="number" formControlName="weight" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+            <mat-option value="Other">Other</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Phone Number</mat-label>
+          <input matInput type="tel" formControlName="phoneNumber" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Payment Status</mat-label>
+          <mat-select formControlName="paymentStatus">
+            <mat-option value="UNPAID">UNPAID</mat-option>
+            <mat-option value="PAID">PAID</mat-option>
+            <mat-option value="PENDING">PENDING</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" *ngIf="memberForm.get('paymentStatus')?.value === 'PAID'">
+          <mat-label>Payment Plan Type</mat-label>
+          <mat-select formControlName="paymentPlanType">
+            <mat-option value="MONTHLY">MONTHLY</mat-option>
+            <mat-option value="YEARLY">YEARLY</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" *ngIf="memberForm.get('paymentStatus')?.value === 'PAID'">
+          <mat-label>Payment Amount</mat-label>
+          <input matInput type="number" formControlName="paymentAmount" [required]="memberForm.get('paymentStatus')?.value === 'PAID'">
         </mat-form-field>
       </form>
     </mat-dialog-content>
@@ -166,6 +237,7 @@ export class MembersComponent implements OnInit {
     MatDatepickerModule,
     MatNativeDateModule,
     MatButtonModule,
+    MatSelectModule,
     ReactiveFormsModule
   ]
 })
@@ -181,20 +253,62 @@ export class AddMemberDialogComponent {
     this.memberForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
       address: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       height: [0, [Validators.required, Validators.min(0)]],
-      weight: [0, [Validators.required, Validators.min(0)]]
+      weight: [0, [Validators.required, Validators.min(0)]],
+      gender: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      paymentStatus: ['UNPAID'],
+      paymentPlanType: [''],
+      paymentAmount: [0]
+    });
+
+    // Add conditional validation for payment fields
+    this.memberForm.get('paymentStatus')?.valueChanges.subscribe(status => {
+      const planTypeControl = this.memberForm.get('paymentPlanType');
+      const amountControl = this.memberForm.get('paymentAmount');
+      
+      if (status === 'PAID') {
+        planTypeControl?.setValidators([Validators.required]);
+        amountControl?.setValidators([Validators.required, Validators.min(0)]);
+      } else {
+        planTypeControl?.clearValidators();
+        amountControl?.clearValidators();
+        planTypeControl?.setValue('');
+        amountControl?.setValue(0);
+      }
+      planTypeControl?.updateValueAndValidity();
+      amountControl?.updateValueAndValidity();
     });
   }
 
   onSubmit(): void {
     if (this.memberForm.valid) {
       const formValue = this.memberForm.value;
+      // Convert height from feet to centimeters for storage (1 foot = 30.48 cm)
+      const heightInCm = formValue.height ? formValue.height * 30.48 : 0;
       const memberData: AddMemberDto = {
-        ...formValue,
-        dateOfBirth: formValue.dateOfBirth.toISOString().split('T')[0]
+        name: formValue.name,
+        email: formValue.email,
+        username: formValue.username,
+        password: formValue.password,
+        address: formValue.address,
+        dateOfBirth: formValue.dateOfBirth.toISOString().split('T')[0],
+        height: heightInCm,
+        weight: formValue.weight,
+        gender: formValue.gender,
+        phoneNumber: formValue.phoneNumber,
+        paymentStatus: formValue.paymentStatus || 'UNPAID'
       };
+
+      // Only include payment fields if status is PAID
+      if (formValue.paymentStatus === 'PAID') {
+        memberData.paymentPlanType = formValue.paymentPlanType;
+        memberData.paymentAmount = formValue.paymentAmount;
+      }
 
       this.memberService.createMember(memberData).subscribe({
         next: () => {
@@ -202,7 +316,7 @@ export class AddMemberDialogComponent {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          this.snackBar.open('Error adding member', 'Close', { duration: 3000 });
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
           console.error('Error:', error);
         }
       });

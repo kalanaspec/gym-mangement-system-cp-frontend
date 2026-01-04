@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
 import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register-admin',
   standalone: true,
   imports: [
     CommonModule,
@@ -24,11 +24,11 @@ import { getErrorMessage } from '../../utils/error.util';
     MatButtonModule,
     MatSnackBarModule
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  templateUrl: './register-admin.component.html',
+  styleUrl: './register-admin.component.css'
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class RegisterAdminComponent {
+  registerForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -36,22 +36,24 @@ export class LoginComponent {
     private router: Router,
     private snackBar: MatSnackBar
   ) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
   onSubmit(): void {
-    if (this.loginForm.valid) {
-      this.authService.login(this.loginForm.value).subscribe({
+    if (this.registerForm.valid) {
+      this.authService.registerAdmin(this.registerForm.value).subscribe({
         next: () => {
-          this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
-          this.router.navigate(['/dashboard']);
+          this.snackBar.open('Admin registered successfully!', 'Close', { duration: 3000 });
+          this.registerForm.reset();
         },
         error: (error) => {
           this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
-          console.error('Login error:', error);
+          console.error('Registration error:', error);
         }
       });
     }

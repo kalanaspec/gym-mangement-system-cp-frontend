@@ -24,6 +24,10 @@ export class AuthService {
     return this.http.post<void>(`${this.apiUrl}/register`, userData);
   }
 
+  registerAdmin(userData: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/register-admin`, userData);
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');

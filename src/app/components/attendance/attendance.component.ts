@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
   selector: 'app-attendance',
@@ -71,7 +72,7 @@ export class AttendanceComponent implements OnInit {
           this.attendanceForm.reset({ source: 'Front Desk' });
         },
         error: (error) => {
-          this.snackBar.open('Error logging attendance', 'Close', { duration: 3000 });
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
           console.error('Error:', error);
         }
       });

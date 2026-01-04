@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
   selector: 'app-payment-plans',
@@ -185,7 +186,7 @@ export class AddPaymentPlanDialogComponent {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          this.snackBar.open('Error adding payment plan', 'Close', { duration: 3000 });
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
           console.error('Error:', error);
         }
       });

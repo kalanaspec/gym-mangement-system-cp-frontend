@@ -7,6 +7,8 @@ export interface Member {
   dateOfBirth: string;
   height: number;
   weight: number;
+  gender?: string;
+  phoneNumber?: string;
   registrationDate: string;
   status: 'pending' | 'active' | 'inactive';
   paymentStatus: 'PAID' | 'UNPAID' | 'PENDING';
@@ -25,6 +27,11 @@ export interface AddMemberDto {
   dateOfBirth: string;
   height: number;
   weight: number;
+  gender?: string;
+  phoneNumber?: string;
+  paymentStatus?: 'PAID' | 'UNPAID' | 'PENDING';
+  paymentPlanType?: 'MONTHLY' | 'YEARLY';
+  paymentAmount?: number;
 }
 
 export interface UpdateMemberStatusDto {

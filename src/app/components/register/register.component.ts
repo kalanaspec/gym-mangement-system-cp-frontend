@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
+import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
   selector: 'app-register',
@@ -51,7 +52,7 @@ export class RegisterComponent {
           this.router.navigate(['/login']);
         },
         error: (error) => {
-          this.snackBar.open('Registration failed. Please try again.', 'Close', { duration: 3000 });
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
           console.error('Registration error:', error);
         }
       });

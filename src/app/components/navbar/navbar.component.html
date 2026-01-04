@@ -15,6 +15,10 @@
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/register-admin">
+      <mat-icon>person_add</mat-icon>
+      <span>Register Admin</span>
+    </button>
     <button mat-menu-item (click)="logout()">
       <mat-icon>logout</mat-icon>
       <span>Logout</span>

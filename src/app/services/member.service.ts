@@ -31,5 +31,19 @@ export class MemberService {
   updateMemberPayment(id: number, payment: UpdateMemberPaymentDto): Observable<Member> {
     return this.http.put<Member>(`${this.apiUrl}/${id}/payment`, payment);
   }
+
+  setPaymentPaid(id: number): Observable<Member> {
+    return this.http.put<Member>(`${this.apiUrl}/${id}/payment`, {
+      paymentStatus: 'PAID',
+      planType: 'MONTHLY',
+      amount: 2500
+    });
+  }
+
+  setPaymentUnpaid(id: number): Observable<Member> {
+    return this.http.put<Member>(`${this.apiUrl}/${id}/payment`, {
+      paymentStatus: 'UNPAID'
+    });
+  }
 }
 

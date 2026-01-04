@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { getErrorMessage } from '../../utils/error.util';
 
 @Component({
   selector: 'app-meal-plans',
@@ -163,7 +164,7 @@ export class AddMealPlanDialogComponent {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          this.snackBar.open('Error adding meal plan', 'Close', { duration: 3000 });
+          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
           console.error('Error:', error);
         }
       });
