@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MemberService } from '../../services/member.service';
 import { Member, AddMemberDto } from '../../../models/member.model';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -138,7 +138,21 @@ export class MembersComponent implements OnInit {
 
   openAddMemberDialog(): void {
     const dialogRef = this.dialog.open(AddMemberDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadMembers();
+      }
+    });
+  }
+
+  editMember(member: Member): void {
+    const dialogRef = this.dialog.open(AddMemberDialogComponent, {
+      width: '500px',
+      data: member
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -152,7 +166,7 @@ export class MembersComponent implements OnInit {
 @Component({
   selector: 'app-add-member-dialog',
   template: `
-    <h2 mat-dialog-title>Add New Member</h2>
+    <h2 mat-dialog-title>{{ isEditMode ? 'Edit Member' : 'Add New Member' }}</h2>
     <mat-dialog-content>
       <form [formGroup]="memberForm">
         <mat-form-field appearance="outline" class="full-width">
@@ -226,7 +240,9 @@ export class MembersComponent implements OnInit {
     </mat-dialog-content>
     <mat-dialog-actions>
       <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-button color="primary" (click)="onSubmit()" [disabled]="memberForm.invalid">Add Member</button>
+      <button mat-button color="primary" (click)="onSubmit()" [disabled]="memberForm.invalid">
+        {{ isEditMode ? 'Update Member' : 'Add Member' }}
+      </button>
     </mat-dialog-actions>
   `,
   styles: [`
@@ -250,25 +266,35 @@ export class MembersComponent implements OnInit {
 })
 export class AddMemberDialogComponent {
   memberForm: FormGroup;
+  isEditMode: boolean = false;
+  memberId?: number;
 
   constructor(
     private fb: FormBuilder,
     private memberService: MemberService,
     private dialogRef: MatDialogRef<AddMemberDialogComponent>,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: Member | null
   ) {
+    this.isEditMode = !!data;
+    this.memberId = data?.memberId;
+
+    // Convert height from cm to feet for display (1 foot = 30.48 cm)
+    const heightInFeet = data?.height ? data.height / 30.48 : 0;
+    const dateOfBirth = data?.dateOfBirth ? new Date(data.dateOfBirth) : null;
+
     this.memberForm = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      height: [0, [Validators.required, Validators.min(0)]],
-      weight: [0, [Validators.required, Validators.min(0)]],
-      gender: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      paymentStatus: ['UNPAID'],
-      paymentPlanType: [''],
-      paymentAmount: [0]
+      name: [data?.user?.name || '', Validators.required],
+      email: [data?.user?.email || '', [Validators.required, Validators.email]],
+      address: [data?.address || '', Validators.required],
+      dateOfBirth: [dateOfBirth, Validators.required],
+      height: [heightInFeet, [Validators.required, Validators.min(0)]],
+      weight: [data?.weight || 0, [Validators.required, Validators.min(0)]],
+      gender: [data?.gender || '', Validators.required],
+      phoneNumber: [data?.phoneNumber || '', Validators.required],
+      paymentStatus: [data?.paymentStatus || 'UNPAID'],
+      paymentPlanType: [data?.paymentPlanType || ''],
+      paymentAmount: [data?.paymentAmount || 0]
     });
 
     // Add conditional validation for payment fields
@@ -288,6 +314,14 @@ export class AddMemberDialogComponent {
       planTypeControl?.updateValueAndValidity();
       amountControl?.updateValueAndValidity();
     });
+
+    // Set validators for edit mode if payment status is PAID
+    if (this.isEditMode && data?.paymentStatus === 'PAID') {
+      this.memberForm.get('paymentPlanType')?.setValidators([Validators.required]);
+      this.memberForm.get('paymentAmount')?.setValidators([Validators.required, Validators.min(0)]);
+      this.memberForm.get('paymentPlanType')?.updateValueAndValidity();
+      this.memberForm.get('paymentAmount')?.updateValueAndValidity();
+    }
   }
 
   onSubmit(): void {
@@ -313,16 +347,29 @@ export class AddMemberDialogComponent {
         memberData.paymentAmount = formValue.paymentAmount;
       }
 
-      this.memberService.createMember(memberData).subscribe({
-        next: () => {
-          this.snackBar.open('Member added successfully', 'Close', { duration: 3000 });
-          this.dialogRef.close(true);
-        },
-        error: (error) => {
-          this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
-          console.error('Error:', error);
-        }
-      });
+      if (this.isEditMode && this.memberId) {
+        this.memberService.updateMember(this.memberId, memberData).subscribe({
+          next: () => {
+            this.snackBar.open('Member updated successfully', 'Close', { duration: 3000 });
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
+            console.error('Error:', error);
+          }
+        });
+      } else {
+        this.memberService.createMember(memberData).subscribe({
+          next: () => {
+            this.snackBar.open('Member added successfully', 'Close', { duration: 3000 });
+            this.dialogRef.close(true);
+          },
+          error: (error) => {
+            this.snackBar.open(getErrorMessage(error), 'Close', { duration: 3000 });
+            console.error('Error:', error);
+          }
+        });
+      }
     }
   }
 

@@ -55,3 +55,62 @@ h1 {
   font-size: 14px;
 }
 
+.revenue-section {
+  margin-top: 48px;
+}
+
+.revenue-section h2 {
+  margin-bottom: 24px;
+  color: #333;
+  font-size: 28px;
+}
+
+.revenue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.revenue-card {
+  min-height: 280px;
+}
+
+.revenue-selector {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.revenue-selector mat-form-field {
+  flex: 1;
+  min-width: 120px;
+}
+
+.revenue-amount {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.revenue-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #667eea;
+}
+
+.revenue-value h3 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+}
+
+.revenue-value p {
+  margin: 8px 0 0 0;
+  color: #666;
+  font-size: 14px;
+}
+

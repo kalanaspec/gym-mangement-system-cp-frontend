@@ -20,6 +20,10 @@ export class MemberService {
     return this.http.post<Member>(this.apiUrl, member);
   }
 
+  updateMember(id: number, member: AddMemberDto): Observable<Member> {
+    return this.http.put<Member>(`${this.apiUrl}/${id}`, member);
+  }
+
   approveMember(id: number): Observable<Member> {
     return this.http.put<Member>(`${this.apiUrl}/${id}/approve`, {});
   }

@@ -21,5 +21,60 @@
       </div>
     </mat-card-content>
   </mat-card>
+
+  <!-- Admin Management Section -->
+  <mat-card class="admin-management-card">
+    <mat-card-header>
+      <mat-card-title>Admin Management</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="loadingAdmins" class="loading">
+        <mat-spinner diameter="40"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loadingAdmins">
+        <div *ngIf="admins.length === 0" class="no-admins">
+          <p>No admins found.</p>
+        </div>
+
+        <table mat-table [dataSource]="admins" class="admins-table" *ngIf="admins.length > 0">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let admin">{{ admin.name || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="username">
+            <th mat-header-cell *matHeaderCellDef>Username</th>
+            <td mat-cell *matCellDef="let admin">
+              {{ admin.username || '-' }}
+              <span *ngIf="admin.username === username" class="current-user-badge">(You)</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let admin">{{ admin.email || '-' }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let admin">
+              <button 
+                mat-icon-button 
+                color="warn" 
+                (click)="deleteAdmin(admin)"
+                [disabled]="!canDeleteAdmin(admin)"
+                [matTooltip]="canDeleteAdmin(admin) ? 'Delete Admin' : 'Cannot delete your own account'">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
 

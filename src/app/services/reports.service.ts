@@ -27,5 +27,17 @@ export class ReportsService {
   getAttendanceReports(): Observable<AttendanceReportDto[]> {
     return this.http.get<AttendanceReportDto[]>(`${this.apiUrl}/attendance`);
   }
+
+  getDailyRevenue(dayOfWeek: number): Observable<{ revenue: number; dayOfWeek: number }> {
+    return this.http.get<{ revenue: number; dayOfWeek: number }>(`${this.apiUrl}/revenue/daily?dayOfWeek=${dayOfWeek}`);
+  }
+
+  getMonthlyRevenue(year: number, month: number): Observable<{ revenue: number; year: number; month: number }> {
+    return this.http.get<{ revenue: number; year: number; month: number }>(`${this.apiUrl}/revenue/monthly?year=${year}&month=${month}`);
+  }
+
+  getYearlyRevenue(year: number): Observable<{ revenue: number; year: number }> {
+    return this.http.get<{ revenue: number; year: number }>(`${this.apiUrl}/revenue/yearly?year=${year}`);
+  }
 }
 
