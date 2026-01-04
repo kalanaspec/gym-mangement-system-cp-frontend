@@ -272,57 +272,56 @@ button[mat-raised-button] {
   background: var(--color-gray-500);
 }
 
-/*!* ============================================*/
-/*   SIDEBAR STATE MANAGEMENT - COMMON STYLES*/
-/*   Applies to all components with sidebar*/
-/*   ============================================ *!*/
+/* ============================================
+   SIDEBAR STATE MANAGEMENT - COMMON STYLES
+   Applies to all components with sidebar
+   ============================================ */
 
-/*!* Default state - sidebar expanded (280px) *!*/
-/*body:not(.sidebar-collapsed) .dashboard-container,*/
-/*body:not(.sidebar-collapsed) .meal-plans-container,*/
-/*body:not(.sidebar-collapsed) .members-container,*/
-/*body:not(.sidebar-collapsed) .payments-container,*/
-/*body:not(.sidebar-collapsed) .payment-plans-container,*/
-/*body:not(.sidebar-collapsed) .attendance-container,*/
-/*body:not(.sidebar-collapsed) .reports-container,*/
-/*body:not(.sidebar-collapsed) .profile-container {*/
-/*  margin-left: 280px;*/
-/*  transition: margin-left 0.3s ease;*/
-/*}*/
+/* Default state - sidebar expanded (280px) */
+body:not(.sidebar-collapsed) .dashboard-container,
+body:not(.sidebar-collapsed) .meal-plans-container,
+body:not(.sidebar-collapsed) .members-container,
+body:not(.sidebar-collapsed) .payments-container,
+body:not(.sidebar-collapsed) .payment-plans-container,
+body:not(.sidebar-collapsed) .attendance-container,
+body:not(.sidebar-collapsed) .reports-container,
+body:not(.sidebar-collapsed) .profile-container {
+  margin-left: 280px;
+  transition: margin-left 0.3s ease;
+}
 
-/*!* Collapsed state - sidebar collapsed (80px) *!*/
-/*body.sidebar-collapsed .dashboard-container,*/
-/*body.sidebar-collapsed .meal-plans-container,*/
-/*body.sidebar-collapsed .members-container,*/
-/*body.sidebar-collapsed .payments-container,*/
-/*body.sidebar-collapsed .payment-plans-container,*/
-/*body.sidebar-collapsed .attendance-container,*/
-/*body.sidebar-collapsed .reports-container,*/
-/*body.sidebar-collapsed .profile-container {*/
-/*  margin-left: 80px;*/
-/*  transition: margin-left 0.3s ease;*/
-/*}*/
+/* Collapsed state - sidebar collapsed (80px) */
+body.sidebar-collapsed .dashboard-container,
+body.sidebar-collapsed .meal-plans-container,
+body.sidebar-collapsed .members-container,
+body.sidebar-collapsed .payments-container,
+body.sidebar-collapsed .payment-plans-container,
+body.sidebar-collapsed .attendance-container,
+body.sidebar-collapsed .reports-container,
+body.sidebar-collapsed .profile-container {
+  margin-left: 80px;
+  transition: margin-left 0.3s ease;
+}
 
-/*!* Mobile responsive - no sidebar margin *!*/
-/*@media (max-width: 968px) {*/
-/*  body .dashboard-container,*/
-/*  body .meal-plans-container,*/
-/*  body .members-container,*/
-/*  body .payments-container,*/
-/*  body .payment-plans-container,*/
-/*  body .attendance-container,*/
-/*  body .reports-container,*/
-/*  body .profile-container,*/
-/*  body.sidebar-collapsed .dashboard-container,*/
-/*  body.sidebar-collapsed .meal-plans-container,*/
-/*  body.sidebar-collapsed .members-container,*/
-/*  body.sidebar-collapsed .payments-container,*/
-/*  body.sidebar-collapsed .payment-plans-container,*/
-/*  body.sidebar-collapsed .attendance-container,*/
-/*  body.sidebar-collapsed .reports-container,*/
-/*  body.sidebar-collapsed .profile-container {*/
-/*    margin-left: 0 !important;*/
-/*    margin-top: 60px;*/
-/*  }*/
-/*}*/
-
+/* Mobile responsive - no sidebar margin */
+@media (max-width: 968px) {
+  body .dashboard-container,
+  body .meal-plans-container,
+  body .members-container,
+  body .payments-container,
+  body .payment-plans-container,
+  body .attendance-container,
+  body .reports-container,
+  body .profile-container,
+  body.sidebar-collapsed .dashboard-container,
+  body.sidebar-collapsed .meal-plans-container,
+  body.sidebar-collapsed .members-container,
+  body.sidebar-collapsed .payments-container,
+  body.sidebar-collapsed .payment-plans-container,
+  body.sidebar-collapsed .attendance-container,
+  body.sidebar-collapsed .reports-container,
+  body.sidebar-collapsed .profile-container {
+    margin-left: 0 !important;
+    padding-top: 80px;
+  }
+}

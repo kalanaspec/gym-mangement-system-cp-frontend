@@ -1,28 +1,89 @@
-<mat-toolbar color="primary">
-  <span>Gym Management System</span>
-  <span class="spacer"></span>
-  <nav class="nav-links">
-    <a mat-button routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
-    <a mat-button routerLink="/members" routerLinkActive="active">Members</a>
-    <a mat-button routerLink="/payments" routerLinkActive="active">Payments</a>
-    <a mat-button routerLink="/payment-plans" routerLinkActive="active">Payment Plans</a>
-    <a mat-button routerLink="/attendance" routerLinkActive="active">Attendance</a>
-    <a mat-button routerLink="/meal-plans" routerLinkActive="active">Meal Plans</a>
-    <a mat-button routerLink="/reports" routerLinkActive="active">Reports</a>
-    <a mat-button routerLink="/profile" routerLinkActive="active">Profile</a>
-  </nav>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/register-admin">
-      <mat-icon>person_add</mat-icon>
-      <span>Register Admin</span>
-    </button>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
-</mat-toolbar>
+<aside class="sidebar" [class.collapsed]="isCollapsed">
+    <!-- Logo Section (Collapse/Expand Button) -->
+    <div class="sidebar-header" (click)="toggleSidebar()">
+        <div class="brand-logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43L16.29 22l2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="logo-text" *ngIf="!isCollapsed">
+                <span class="iron">IRON</span>
+                <span class="paradise">PARADISE</span>
+            </div>
+        </div>
+        <button class="collapse-btn" [class.collapsed]="isCollapsed">
+            <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+        </button>
+    </div>
 
+    <!-- Navigation Links -->
+    <nav class="nav-menu">
+        <a class="nav-item" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+            <mat-icon class="nav-icon">dashboard</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Dashboard</span>
+        </a>
+
+        <a class="nav-item" routerLink="/members" routerLinkActive="active">
+            <mat-icon class="nav-icon">people</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Members</span>
+        </a>
+
+        <a class="nav-item" routerLink="/payments" routerLinkActive="active">
+            <mat-icon class="nav-icon">payment</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Payments</span>
+        </a>
+
+        <a class="nav-item" routerLink="/payment-plans" routerLinkActive="active">
+            <mat-icon class="nav-icon">credit_card</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Payment Plans</span>
+        </a>
+
+        <a class="nav-item" routerLink="/attendance" routerLinkActive="active">
+            <mat-icon class="nav-icon">event_available</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Attendance</span>
+        </a>
+
+        <a class="nav-item" routerLink="/meal-plans" routerLinkActive="active">
+            <mat-icon class="nav-icon">restaurant_menu</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Meal Plans</span>
+        </a>
+
+        <a class="nav-item" routerLink="/reports" routerLinkActive="active">
+            <mat-icon class="nav-icon">assessment</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Reports</span>
+        </a>
+
+        <a class="nav-item" routerLink="/profile" routerLinkActive="active">
+            <mat-icon class="nav-icon">person</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Profile</span>
+        </a>
+    </nav>
+
+    <!-- Bottom Section -->
+    <div class="sidebar-footer">
+        <div class="nav-item" [matMenuTriggerFor]="menu">
+            <mat-icon class="nav-icon">account_circle</mat-icon>
+            <span class="nav-label" *ngIf="!isCollapsed">Account</span>
+        </div>
+
+        <mat-menu #menu="matMenu" class="sidebar-menu">
+            <button mat-menu-item routerLink="/register-admin">
+                <mat-icon>person_add</mat-icon>
+                <span>Register Admin</span>
+            </button>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+    </div>
+</aside>
+
+<!-- Mobile Overlay -->
+<div class="sidebar-overlay" [class.active]="isMobileMenuOpen" (click)="closeMobileMenu()"></div>
+
+<!-- Mobile Toggle Button -->
+<button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+    <mat-icon>{{ isMobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+</button>
