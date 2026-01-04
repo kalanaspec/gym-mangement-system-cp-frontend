@@ -41,7 +41,7 @@ import { getErrorMessage } from '../../utils/error.util';
   styleUrl: './members.component.css'
 })
 export class MembersComponent implements OnInit {
-  displayedColumns: string[] = ['memberId', 'name', 'email', 'gender', 'phoneNumber', 'height', 'weight', 'address', 'status', 'paymentStatus', 'actions'];
+  displayedColumns: string[] = ['admissionNumber', 'memberId', 'name', 'email', 'gender', 'phoneNumber', 'height', 'weight', 'address', 'status', 'paymentStatus', 'actions'];
   members: Member[] = [];
   loading = true;
 
@@ -159,14 +159,6 @@ export class MembersComponent implements OnInit {
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" required>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>UserName</mat-label>
-          <input matInput formControlName="username" required>
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" required>
-        </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Email</mat-label>
@@ -268,8 +260,6 @@ export class AddMemberDialogComponent {
     this.memberForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
       address: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       height: [0, [Validators.required, Validators.min(0)]],
@@ -308,8 +298,6 @@ export class AddMemberDialogComponent {
       const memberData: AddMemberDto = {
         name: formValue.name,
         email: formValue.email,
-        username: formValue.username,
-        password: formValue.password,
         address: formValue.address,
         dateOfBirth: formValue.dateOfBirth.toISOString().split('T')[0],
         height: heightInCm,

@@ -2,6 +2,7 @@ import { User } from './user.model';
 
 export interface Member {
   memberId: number;
+  admissionNumber?: string;
   user: User;
   address: string;
   dateOfBirth: string;
@@ -21,8 +22,6 @@ export interface Member {
 export interface AddMemberDto {
   name: string;
   email: string;
-  username: string;
-  password: string;
   address: string;
   dateOfBirth: string;
   height: number;
