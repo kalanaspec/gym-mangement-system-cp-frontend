@@ -1,34 +1,312 @@
+/* ============================================
+   REGISTER ADMIN CONTAINER
+   ============================================ */
 .register-admin-container {
+  padding: 32px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 64px);
-  padding: 20px;
-  background-color: #f5f5f5;
 }
 
+/* ============================================
+   REGISTER ADMIN CARD
+   ============================================ */
 .register-admin-card {
   width: 100%;
-  max-width: 450px;
-  padding: 20px;
+  max-width: 520px;
+  border-radius: 16px;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
 }
 
-.full-width {
-  width: 100%;
-  margin-bottom: 16px;
-}
-
+/* ============================================
+   CARD HEADER
+   ============================================ */
 mat-card-header {
+  padding: 32px 32px 0;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(16, 185, 129, 0.02) 100%);
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.header-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.header-icon-wrapper mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: white;
 }
 
 mat-card-title {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
 }
 
 mat-card-subtitle {
+  font-size: 0.9375rem;
+  color: #64748b;
+  margin: 0 0 24px 0;
+  font-weight: 500;
+}
+
+/* ============================================
+   CARD CONTENT
+   ============================================ */
+mat-card-content {
+  padding: 32px;
+}
+
+/* ============================================
+   FORM STYLING
+   ============================================ */
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field {
+  font-size: 0.9375rem;
+}
+
+::ng-deep .register-admin-card .mat-mdc-text-field-wrapper {
+  background-color: #f8fafc;
+}
+
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+  border-color: #cbd5e1;
+}
+
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover .mdc-notched-outline__leading,
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover .mdc-notched-outline__notch,
+::ng-deep .register-admin-card .mdc-text-field--outlined:not(.mdc-text-field--disabled):hover .mdc-notched-outline__trailing {
+  border-color: var(--color-secondary);
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+::ng-deep .register-admin-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+::ng-deep .register-admin-card .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--color-secondary) !important;
+  border-width: 2px !important;
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field.mat-focused .mat-mdc-floating-label {
+  color: var(--color-secondary);
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field .mat-icon {
+  color: #64748b;
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field.mat-focused .mat-icon {
+  color: var(--color-secondary);
+}
+
+::ng-deep .register-admin-card .mdc-text-field--filled {
+  background-color: #f8fafc;
+}
+
+::ng-deep .register-admin-card .mat-mdc-form-field-error {
+  color: #dc2626;
+  font-size: 0.75rem;
+}
+
+/* ============================================
+   SUBMIT BUTTON
+   ============================================ */
+.submit-btn {
+  height: 48px;
+  padding: 0 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
   margin-top: 8px;
 }
 
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, var(--color-secondary-dark) 0%, #047857 100%);
+}
+
+.submit-btn:disabled {
+  background: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   FORM SECTIONS
+   ============================================ */
+.form-section {
+  margin-bottom: 24px;
+}
+
+.form-section-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* ============================================
+   FORM FIELD WITH ICON
+   ============================================ */
+.field-with-icon {
+  position: relative;
+}
+
+.field-with-icon mat-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
+}
+
+.field-with-icon .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 968px) {
+  .register-admin-container {
+    padding: 24px 20px;
+  }
+
+  .register-admin-card {
+    max-width: 100%;
+  }
+
+  mat-card-header {
+    padding: 28px 28px 0;
+  }
+
+  mat-card-content {
+    padding: 28px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .register-admin-container {
+    padding: 20px 16px;
+  }
+
+  .register-admin-card {
+    border-radius: 12px;
+  }
+
+  mat-card-header {
+    padding: 24px 24px 0;
+  }
+
+  .header-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+    border-radius: 16px;
+  }
+
+  .header-icon-wrapper mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+  }
+
+  mat-card-title {
+    font-size: 1.5rem;
+  }
+
+  mat-card-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 20px;
+  }
+
+  mat-card-content {
+    padding: 24px;
+  }
+
+  .full-width {
+    margin-bottom: 16px;
+  }
+
+  .submit-btn {
+    height: 44px;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .register-admin-container {
+    padding: 16px 12px;
+  }
+
+  mat-card-header {
+    padding: 20px 20px 0;
+  }
+
+  mat-card-content {
+    padding: 20px;
+  }
+
+  .header-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .header-icon-wrapper mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  mat-card-title {
+    font-size: 1.375rem;
+  }
+
+  .submit-btn {
+    height: 42px;
+    font-size: 0.875rem;
+  }
+}

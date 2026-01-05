@@ -1,105 +1,173 @@
 <div class="members-container">
-  <div class="header">
-    <h1>Members Management</h1>
-    <button mat-raised-button color="primary" (click)="openAddMemberDialog()">
-      <mat-icon>add</mat-icon>
-      Add Member
-    </button>
-  </div>
-
-  <div *ngIf="loading" class="loading">
-    <mat-spinner></mat-spinner>
-  </div>
-
-  <table mat-table [dataSource]="members" class="members-table" *ngIf="!loading">
-    <ng-container matColumnDef="admissionNumber">
-      <th mat-header-cell *matHeaderCellDef>Admission No</th>
-      <td mat-cell *matCellDef="let member">{{ member.admissionNumber || '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="memberId">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let member">{{ member.memberId }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let member">{{ member.user?.name }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef>Email</th>
-      <td mat-cell *matCellDef="let member">{{ member.user?.email }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="gender">
-      <th mat-header-cell *matHeaderCellDef>Gender</th>
-      <td mat-cell *matCellDef="let member">{{ member.gender || '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="phoneNumber">
-      <th mat-header-cell *matHeaderCellDef>Phone Number</th>
-      <td mat-cell *matCellDef="let member">{{ member.phoneNumber || '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="height">
-      <th mat-header-cell *matHeaderCellDef>Height (feet)</th>
-      <td mat-cell *matCellDef="let member">{{ member.height ? (member.height / 30.48).toFixed(2) + ' ft' : '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef>Weight (kg)</th>
-      <td mat-cell *matCellDef="let member">{{ member.weight || '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef>Address</th>
-      <td mat-cell *matCellDef="let member">{{ member.address || '-' }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let member">
-        <span [class]="'status-badge ' + member.status">{{ member.status }}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="paymentStatus">
-      <th mat-header-cell *matHeaderCellDef>Payment Status</th>
-      <td mat-cell *matCellDef="let member">
-        <span [class]="'payment-badge ' + member.paymentStatus">{{ member.paymentStatus }}</span>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let member">
-        <button mat-icon-button (click)="editMember(member)" matTooltip="Edit Member" color="primary">
-          <mat-icon>edit</mat-icon>
+    <!-- Header Section -->
+    <div class="page-header">
+        <div class="header-content">
+            <h1>Members Management</h1>
+            <p class="subtitle">Manage and track all gym members</p>
+        </div>
+        <button mat-raised-button class="add-member-btn" (click)="openAddMemberDialog()">
+            <mat-icon>add</mat-icon>
+            <span>Add Member</span>
         </button>
-        <button mat-icon-button *ngIf="member.status === 'pending'" (click)="approveMember(member.memberId)" matTooltip="Approve">
-          <mat-icon>check_circle</mat-icon>
-        </button>
-        <button mat-icon-button (click)="updateStatus(member.memberId, 'active')" *ngIf="member.status !== 'active'" matTooltip="Activate">
-          <mat-icon>play_circle</mat-icon>
-        </button>
-        <button mat-icon-button (click)="updateStatus(member.memberId, 'inactive')" *ngIf="member.status !== 'inactive'" matTooltip="Deactivate">
-          <mat-icon>pause_circle</mat-icon>
-        </button>
-        <button mat-icon-button (click)="setPaymentPaid(member.memberId)" *ngIf="member.paymentStatus !== 'PAID'" matTooltip="Set Payment as Paid" color="primary">
-          <mat-icon>attach_money</mat-icon>
-        </button>
-        <button mat-icon-button (click)="setPaymentUnpaid(member.memberId)" *ngIf="member.paymentStatus === 'PAID'" matTooltip="Set Payment as Unpaid" color="warn">
-          <mat-icon>money_off</mat-icon>
-        </button>
-        <button mat-icon-button (click)="deleteMember(member.memberId)" matTooltip="Delete Member" color="warn">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+    </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p>Loading members...</p>
+    </div>
+
+    <!-- Members Table Card -->
+    <mat-card class="table-card" *ngIf="!loading">
+        <mat-card-content>
+            <div class="table-wrapper">
+                <table mat-table [dataSource]="members" class="members-table">
+
+                    <!-- Admission Number Column -->
+                    <ng-container matColumnDef="admissionNumber">
+                        <th mat-header-cell *matHeaderCellDef>Admission No</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="id-badge">{{ member.admissionNumber || 'N/A' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Member ID Column -->
+                    <ng-container matColumnDef="memberId">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data id-badge">{{ member.memberId }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data">{{ member.user?.name }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Email Column -->
+                    <ng-container matColumnDef="email">
+                        <th mat-header-cell *matHeaderCellDef>Email</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data secondary">{{ member.user?.email }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Gender Column -->
+                    <ng-container matColumnDef="gender">
+                        <th mat-header-cell *matHeaderCellDef>Gender</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data">{{ member.gender || '-' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Phone Number Column -->
+                    <ng-container matColumnDef="phoneNumber">
+                        <th mat-header-cell *matHeaderCellDef>Phone</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data">{{ member.phoneNumber || '-' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Height Column -->
+                    <ng-container matColumnDef="height">
+                        <th mat-header-cell *matHeaderCellDef>Height</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data secondary">{{ member.height ? (member.height / 30.48).toFixed(2) + ' ft' : '-' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="weight">
+                        <th mat-header-cell *matHeaderCellDef>Weight</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data secondary">{{ member.weight ? member.weight + ' kg' : '-' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Address Column -->
+                    <ng-container matColumnDef="address">
+                        <th mat-header-cell *matHeaderCellDef>Address</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span class="cell-data secondary">{{ member.address || '-' }}</span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span [class]="'status-badge ' + member.status">
+                                {{ member.status }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Payment Status Column -->
+                    <ng-container matColumnDef="paymentStatus">
+                        <th mat-header-cell *matHeaderCellDef>Payment</th>
+                        <td mat-cell *matCellDef="let member">
+                            <span [class]="'payment-badge ' + member.paymentStatus">
+                                {{ member.paymentStatus }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Actions</th>
+                        <td mat-cell *matCellDef="let member">
+                            <div class="action-buttons">
+                                <button mat-icon-button class="action-btn edit-btn"
+                                        (click)="editMember(member)"
+                                        matTooltip="Edit Member">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn approve-btn"
+                                        *ngIf="member.status === 'pending'"
+                                        (click)="approveMember(member.memberId)"
+                                        matTooltip="Approve">
+                                    <mat-icon>check_circle</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn activate-btn"
+                                        (click)="updateStatus(member.memberId, 'active')"
+                                        *ngIf="member.status !== 'active'"
+                                        matTooltip="Activate">
+                                    <mat-icon>play_circle</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn deactivate-btn"
+                                        (click)="updateStatus(member.memberId, 'inactive')"
+                                        *ngIf="member.status !== 'inactive'"
+                                        matTooltip="Deactivate">
+                                    <mat-icon>pause_circle</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn paid-btn"
+                                        (click)="setPaymentPaid(member.memberId)"
+                                        *ngIf="member.paymentStatus !== 'PAID'"
+                                        matTooltip="Set Payment as Paid">
+                                    <mat-icon>attach_money</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn unpaid-btn"
+                                        (click)="setPaymentUnpaid(member.memberId)"
+                                        *ngIf="member.paymentStatus === 'PAID'"
+                                        matTooltip="Set Payment as Unpaid">
+                                    <mat-icon>money_off</mat-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn delete-btn"
+                                        (click)="deleteMember(member.memberId)"
+                                        matTooltip="Delete Member">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns" class="table-row"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
 </div>
-

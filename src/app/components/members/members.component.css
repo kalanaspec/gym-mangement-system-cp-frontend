@@ -1,59 +1,423 @@
+/* ============================================
+   MEMBERS CONTAINER
+   ============================================ */
 .members-container {
-  padding: 24px;
+  padding: 32px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
 }
 
-.header {
+/* ============================================
+   PAGE HEADER
+   ============================================ */
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
+.header-content h1 {
+  margin: 0 0 8px 0;
+  color: var(--color-primary-dark);
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-primary-medium);
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.add-member-btn {
+  height: 48px;
+  padding: 0 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+  color: white !important;
+  border: none;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-member-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+  background: linear-gradient(135deg, var(--color-secondary-dark) 0%, #047857 100%);
+}
+
+.add-member-btn mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
 .loading {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 400px;
+  gap: 16px;
 }
 
-.members-table {
-  width: 100%;
-}
-
-.status-badge, .payment-badge {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
+.loading p {
+  color: var(--color-primary-medium);
+  font-size: 1rem;
   font-weight: 500;
 }
 
+/* ============================================
+   TABLE CARD
+   ============================================ */
+.table-card {
+  border-radius: 16px;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ============================================
+   TABLE STYLING
+   ============================================ */
+.members-table {
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+/* Header Styling */
+.members-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 14px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+  white-space: nowrap;
+}
+
+/* Cell Styling */
+.members-table td {
+  padding: 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  font-size: 0.875rem;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+}
+
+/* Row Hover Effect */
+.table-row {
+  transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+  background-color: #f8fafc;
+}
+
+.table-row:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   CELL DATA
+   ============================================ */
+.cell-data {
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.cell-data.secondary {
+  color: #64748b;
+  font-size: 0.8125rem;
+}
+
+/* ============================================
+   ID BADGE
+   ============================================ */
+.id-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #475569;
+}
+
+/* ============================================
+   STATUS & PAYMENT BADGES
+   ============================================ */
+.status-badge, .payment-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Status Badge Colors */
 .status-badge.pending {
-  background-color: #ff9800;
-  color: white;
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .status-badge.active {
-  background-color: #4caf50;
-  color: white;
+  background: #d1fae5;
+  color: #065f46;
 }
 
 .status-badge.inactive {
-  background-color: #f44336;
-  color: white;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
+/* Payment Badge Colors */
 .payment-badge.PAID {
-  background-color: #4caf50;
-  color: white;
+  background: #d1fae5;
+  color: #065f46;
 }
 
 .payment-badge.UNPAID {
-  background-color: #f44336;
-  color: white;
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 .payment-badge.PENDING {
-  background-color: #ff9800;
-  color: white;
+  background: #fef3c7;
+  color: #92400e;
 }
 
+/* ============================================
+   ACTION BUTTONS - COMPACT & PROFESSIONAL
+   ============================================ */
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.action-btn {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  padding: 0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Edit Button */
+.edit-btn {
+  color: #00050e;
+}
+
+.edit-btn:hover {
+  background: #dbeafe;
+  transform: scale(1.05);
+}
+
+/* Approve Button */
+.approve-btn {
+  color: #059669;
+}
+
+.approve-btn:hover {
+  background: #a7f3d0;
+  transform: scale(1.05);
+}
+
+/* Activate Button */
+.activate-btn {
+  color: #059669;
+}
+
+.activate-btn:hover {
+  background: #a7f3d0;
+  transform: scale(1.05);
+}
+
+/* Deactivate Button */
+.deactivate-btn {
+  color: #d97706;
+}
+
+.deactivate-btn:hover {
+  background: #fde68a;
+}
+
+/* Paid Button */
+.paid-btn {
+  color: #059669;
+}
+
+.paid-btn:hover {
+  background: #a7f3d0;
+}
+
+/* Unpaid Button */
+.unpaid-btn {
+  color: #dc2626;
+}
+
+.unpaid-btn:hover {
+  background: #fecaca;
+}
+
+/* Delete Button */
+.delete-btn {
+  color: #dc2626;
+}
+
+.delete-btn:hover {
+  background: #fecaca;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Desktop */
+@media (max-width: 1400px) {
+  .members-table {
+    min-width: 1100px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .members-container {
+    padding: 28px 20px;
+  }
+
+  .header-content h1 {
+    font-size: 2rem;
+  }
+
+  .page-header {
+    gap: 16px;
+  }
+
+  .add-member-btn {
+    height: 44px;
+    padding: 0 24px;
+    font-size: 0.95rem;
+  }
+
+  .members-table {
+    min-width: 1000px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 968px) {
+  .members-container {
+    padding: 24px 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-member-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .table-card {
+    border-radius: 12px;
+  }
+
+  .members-table {
+    min-width: 900px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 640px) {
+  .members-container {
+    padding: 20px 12px;
+  }
+
+  .header-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .add-member-btn {
+    height: 42px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+
+  .add-member-btn mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}

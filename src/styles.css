@@ -325,3 +325,30 @@ body.sidebar-collapsed .profile-container {
     padding-top: 80px;
   }
 }
+
+/* ============================================
+   CONFIRM DIALOG GLOBAL STYLES
+   ============================================ */
+.confirm-dialog-container {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.confirm-dialog-container .mat-mdc-dialog-container {
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.confirm-dialog-container .mat-mdc-dialog-surface {
+  border-radius: 20px;
+  background: white;
+}
+
+/* Dialog backdrop */
+.cdk-overlay-dark-backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+

@@ -1,0 +1,304 @@
+.confirm-dialog {
+  padding: 0;
+  max-width: 500px;
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 40px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.dialog-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: scaleIn 0.3s ease, pulse 2s infinite;
+}
+
+.dialog-icon::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.dialog-icon mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: white;
+  z-index: 1;
+}
+
+/* Icon Type Styles */
+.dialog-icon.danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.4);
+}
+
+.dialog-icon.danger::before {
+  background: #ef4444;
+}
+
+.dialog-icon.warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+}
+
+.dialog-icon.warning::before {
+  background: #f59e0b;
+}
+
+.dialog-icon.info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+}
+
+.dialog-icon.info::before {
+  background: #3b82f6;
+}
+
+.dialog-icon.success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+}
+
+.dialog-icon.success::before {
+  background: #10b981;
+}
+
+/* Dialog Content */
+.dialog-content {
+  padding: 20px 40px 32px;
+  text-align: center;
+}
+
+.dialog-title {
+  margin: 0 0 12px 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.5px;
+}
+
+.dialog-message {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* Dialog Actions */
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  padding: 0 40px 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancel-btn,
+.danger-btn,
+.warning-btn,
+.info-btn,
+.success-btn {
+  height: 48px;
+  min-width: 120px;
+  border-radius: 12px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 20px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+/* Cancel Button */
+.cancel-btn {
+  background: white;
+  color: #475569;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cancel-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-btn:active {
+  transform: translateY(0);
+}
+
+.cancel-btn mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+/* Danger Button */
+.danger-btn {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.3);
+}
+
+.danger-btn:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  transform: translateY(-2px);
+}
+
+.danger-btn:active {
+  transform: translateY(0);
+}
+
+/* Warning Button */
+.warning-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+
+.warning-btn:hover {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.warning-btn:active {
+  transform: translateY(0);
+}
+
+/* Info Button */
+.info-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+}
+
+.info-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.info-btn:active {
+  transform: translateY(0);
+}
+
+/* Success Button */
+.success-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.success-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+.success-btn:active {
+  transform: translateY(0);
+}
+
+.danger-btn mat-icon,
+.warning-btn mat-icon,
+.info-btn mat-icon,
+.success-btn mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+/* Animations */
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .dialog-header {
+    padding: 32px 24px 16px;
+  }
+
+  .dialog-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .dialog-icon mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .dialog-content {
+    padding: 16px 24px 24px;
+  }
+
+  .dialog-title {
+    font-size: 1.5rem;
+  }
+
+  .dialog-message {
+    font-size: 0.95rem;
+  }
+
+  .dialog-actions {
+    flex-direction: column;
+    padding: 0 24px 32px;
+    gap: 8px;
+  }
+
+  .cancel-btn,
+  .danger-btn,
+  .warning-btn,
+  .info-btn,
+  .success-btn {
+    width: 100%;
+    min-width: auto;
+    height: 44px;
+  }
+}
