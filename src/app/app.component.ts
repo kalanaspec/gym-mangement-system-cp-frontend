@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { AuthService } from './services/auth.service';
 import { SessionService } from './services/session.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private sessionService = inject(SessionService);
   private router = inject(Router);
   private subscriptions = new Subscription();
+  showNavbar = false;
 
   constructor(public authService: AuthService) {}
 
@@ -42,6 +43,16 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     }
 
+    // Update navbar visibility based on current route
+    this.updateNavbarVisibility();
+    
+    // Subscribe to route changes to update navbar visibility
+    const routeChangeSub = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.updateNavbarVisibility();
+    });
+
     // Subscribe to session expiration events
     const sessionExpiredSub = this.sessionService.sessionExpired$.subscribe(() => {
       // Session expired, force redirect to login
@@ -59,8 +70,19 @@ export class AppComponent implements OnInit, OnDestroy {
       // You can show a warning dialog here if needed
     });
 
+    this.subscriptions.add(routeChangeSub);
     this.subscriptions.add(sessionExpiredSub);
     this.subscriptions.add(sessionExpiringSub);
+  }
+
+  private updateNavbarVisibility(): void {
+    const currentUrl = this.router.url;
+    // Hide navbar on login and register pages
+    const hideNavbarRoutes = ['/login', '/register'];
+    const shouldHide = hideNavbarRoutes.some(route => currentUrl === route || currentUrl.startsWith(route + '/'));
+    
+    // Show navbar only if authenticated AND not on login/register pages
+    this.showNavbar = this.authService.isAuthenticated() && !shouldHide;
   }
 
   ngOnDestroy(): void {
